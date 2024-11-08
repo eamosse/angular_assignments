@@ -1,0 +1,25 @@
+<p>{{ title }}</p>
+<main class="container">
+  <a routerLink="/add">
+    Ajouter Assignment
+  </a>
+  <mat-list *ngFor="let assignment of assignments">
+    <h3 mat-subheader>{{ assignment.dateDeRendu | date }}</h3>
+    <mat-list-item (click)="onSelect(assignment.id)">
+      @if (assignment.rendu) {
+        <p appRender>Devoir intitulé {{ assignment.nom }} a été rendu.</p>
+      } @else {
+        <p appNotRender>Devoir intitulé {{ assignment.nom }} n'a pas été rendu.</p>
+      }
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <mat-action-list>
+      <nav>
+        <a routerLink="/edit/{{ assignment.id }}">Edit</a>
+      </nav>
+    </mat-action-list>
+  </mat-list>
+  <app-assignment-detail></app-assignment-detail>
+</main>
+

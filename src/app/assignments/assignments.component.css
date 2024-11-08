@@ -1,0 +1,9 @@
+.assignment-add {
+  align-self: flex-end;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+}

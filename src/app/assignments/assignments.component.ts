@@ -48,6 +48,9 @@ export class AssignmentsComponent implements OnInit {
     this.formVisible = !this.formVisible
   }
 
+  onCreated() {
+    this.formVisible = false
+  }
 }
 
 

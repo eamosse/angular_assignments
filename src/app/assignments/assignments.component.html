@@ -1,11 +1,10 @@
 <p>{{ title }}</p>
-<main class="container">
-  <a routerLink="/add">
-    Ajouter Assignment
-  </a>
+<main class="container" *ngIf="!formVisible">
+  <button mat-raised-button color="primary"  class="assignment-add" (click)="switchForm()">Add</button>
+  <div class="list">
   <mat-list *ngFor="let assignment of assignments">
     <h3 mat-subheader>{{ assignment.dateDeRendu | date }}</h3>
-    <mat-list-item (click)="onSelect(assignment.id)">
+    <mat-list-item>
       @if (assignment.rendu) {
         <p appRender>Devoir intitulé {{ assignment.nom }} a été rendu.</p>
       } @else {
@@ -16,10 +15,15 @@
 
     <mat-action-list>
       <nav>
-        <a routerLink="/edit/{{ assignment.id }}">Edit</a>
+        <a href="#" (click)="onSelect(assignment.id)">View</a>
       </nav>
     </mat-action-list>
   </mat-list>
-  <app-assignment-detail></app-assignment-detail>
+  </div>
+  <div class="detail">
+    <app-assignment-detail></app-assignment-detail>
+  </div>
 </main>
+
+<app-add-assignment *ngIf="formVisible" (assignmentCreate) = "onCreated()" ></app-add-assignment>
 

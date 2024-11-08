@@ -1,48 +1,46 @@
 import {Injectable} from '@angular/core';
 import {Assignment} from "../../assignments/assignment.models";
 import {BehaviorSubject, of} from "rxjs";
-import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssignmentsService {
 
-  backendUrl = "http://localhost:8010/api/assignments"
-
-  /*private assignments: Assignment[] = [
+  private assignments: Assignment[] = [
     {
+      id: 1,
       nom: "Assignment 1",
       rendu: true,
       dateDeRendu: new Date()
     },
     {
+      id: 2,
       nom: "Assignment 2",
       rendu: false
     },
     {
+      id: 3,
       nom: "Assignment 3",
       rendu: true,
       dateDeRendu: new Date()
     },
     {
+      id: 4,
       nom: "Assignment 4",
       rendu: false
     }
-  ]*/
+  ]
 
-  private sharedObjectSource = new BehaviorSubject<number|undefined>(undefined);
+  private sharedObjectSource = new BehaviorSubject<number | undefined>(undefined);
   currentAssignment = this.sharedObjectSource.asObservable();
 
-  //currentAssignment?: Assignment|undefined = undefined;
-  private client: HttpClient;
 
-  constructor(client: HttpClient) {
-    this.client = client
+  constructor() {
   }
 
   getAssignments() {
-    return this.client.get<Assignment[]>(this.backendUrl)
+    return of(this.assignments)
   }
 
   selectAssignment(id: number) {
@@ -50,20 +48,13 @@ export class AssignmentsService {
   }
 
   getAssignment(id: number) {
-    return this.client.get<Assignment>(this.backendUrl + "/" + id)
+    return of(this.assignments.find(a => a.id === id))
   }
 
   addAssignment(assignment: Assignment) {
-    //this.assignments.push(assignment)
+    assignment.id = this.assignments.length + 1
+    this.assignments.push(assignment)
     return of("Assignment added")
-  }
-
-  updateAssignment(assignment: Assignment, index: number) {
-    //this.assignments[index] = assignment
-  }
-
-  deleteAssignment(index: number) {
-    //this.assignments.splice(index, 1)
   }
 
 }
